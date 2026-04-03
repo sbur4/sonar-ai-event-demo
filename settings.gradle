@@ -1,0 +1,9 @@
+pluginManagement {
+    repositories {
+        maven { url = 'https://repo.spring.io/snapshot' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'sonar-ai-event-epam-demo'

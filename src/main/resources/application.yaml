@@ -1,0 +1,23 @@
+server:
+  shutdown: graceful
+  port: 8181
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: demo
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  threads:
+    virtual:
+      enable: true
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+      springframework.web: DEBUG
+      eclipse:
+        jetty: INFO

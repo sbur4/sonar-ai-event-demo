@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '4.1.0-M4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+ext {
+    lombok_v = '1.18.44'
+    junit_v = '6.1.0-M1'
+    mockito_v = '5.23.0'
+}
+
+group = 'com.epam'
+version = '0.0.1-SNAPSHOT'
+description = 'Sonar AI Event Java Line-Up Community EPAM Demo'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-jetty'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compileOnly "org.projectlombok:lombok:${lombok_v}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_v}"
+    testCompileOnly "org.projectlombok:lombok:${lombok_v}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombok_v}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
+    testImplementation "org.mockito:mockito-core:${mockito_v}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_v}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_v}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_v}"
+    testImplementation "org.junit.platform:junit-platform-launcher:${junit_v}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    jvmArgs("-XX:+EnableDynamicAgentLoading", "-Djdk.instrument.traceUsage")
+    jvmArgs("-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('byte-buddy-agent') }.absolutePath}")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.incremental = true
+}
+
+jar {
+    enabled = false
+}

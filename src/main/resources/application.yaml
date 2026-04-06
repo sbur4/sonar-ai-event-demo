@@ -12,12 +12,42 @@ spring:
   threads:
     virtual:
       enable: true
+  datasource:
+    #    url: jdbc:h2:mem:demodb;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  h2.console:
+    enabled: true
+    path: /h2-console
+  cache.type: simple
 
 logging:
   level:
     root: INFO
     org:
       springframework: INFO
-      springframework.web: DEBUG
+      springframework.web: INFO
+      springframework.security: DEBUG
+      springframework.data.jpa: DEBUG
       eclipse:
         jetty: INFO
+      hibernate.SQL: DEBUG
+      hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com:
+      demo.sonar: DEBUG
+      demo.sonar.web: DEBUG
+      demo.sonar.core: DEBUG
+      demo.sonar.data: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

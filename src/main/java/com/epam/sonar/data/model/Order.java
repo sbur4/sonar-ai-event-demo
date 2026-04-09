@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 @Data
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class Order {
 

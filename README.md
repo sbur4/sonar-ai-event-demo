@@ -1,6 +1,6 @@
 # Sonar AI / CodeFix — Full Demo Project
 
-**Spring Boot 4** · **Java 24** · **Gradle** · **Lombok** · **H2** · **Spring Security**
+**Spring Boot 4** · **Java 25** · **Gradle** · **Lombok** · **H2** · **Spring Security 7**
 
 > A deliberately flawed project designed to showcase SonarQube AI detection and AI CodeFix
 > across all major issue categories. Every issue is annotated with its Sonar rule ID.

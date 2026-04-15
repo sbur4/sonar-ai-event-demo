@@ -9,6 +9,8 @@ ext {
     lombok_v = '1.18.44'
     junit_v = '6.1.0-M1'
     mockito_v = '5.23.0'
+    h2_v = '2.4.240'
+    logstash_v = '9.0'
 }
 
 group = 'com.epam'
@@ -25,6 +27,12 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    configureEach {
+        resolutionStrategy {
+            failOnVersionConflict()
+            preferProjectModules()
+        }
+    }
 }
 
 repositories {
@@ -38,11 +46,20 @@ dependencies {
     }
     implementation 'org.springframework.boot:spring-boot-starter-jetty'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+    runtimeOnly "com.h2database:h2:${h2_v}"
+    testImplementation "com.h2database:h2:${h2_v}"
 
     compileOnly "org.projectlombok:lombok:${lombok_v}"
     annotationProcessor "org.projectlombok:lombok:${lombok_v}"
     testCompileOnly "org.projectlombok:lombok:${lombok_v}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombok_v}"
+
+    implementation "net.logstash.logback:logstash-logback-encoder:${logstash_v}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'

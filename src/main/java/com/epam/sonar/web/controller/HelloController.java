@@ -1,4 +1,4 @@
-package com.epam.sonar.web;
+package com.epam.sonar.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
